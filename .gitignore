@@ -1,0 +1,9 @@
+# VSCode / IDE
+.vscode/
+.idea/
+
+# Data
+data/raw_documents/
+data/user_uploads/
+
+.env

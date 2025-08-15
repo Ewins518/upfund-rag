@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  api:
+    build: ./backend
+    container_name: rag_api
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/raw_documents:/app/data/raw_documents:rw
+      - ./data/user_uploads:/app/data/user_uploads:rw
+    command: gunicorn -w 1 -b 0.0.0.0:8000 main:app
+    restart: unless-stopped
+
+  ui:
+    build: ./frontend
+    container_name: rag_ui
+    env_file: .env
+    environment:
+      - BACKEND_URL=http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    restart: unless-stopped
