@@ -2,6 +2,10 @@
 
 # RAG Microservices — Flask API + Streamlit UI (Pinecone)
 
+## Demo Video
+
+https://private-user-images.githubusercontent.com/74628423/478518468-fe3c7e26-c529-4ac3-baa8-9774172136ae.mp4?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTUyNzk4NzYsIm5iZiI6MTc1NTI3OTU3NiwicGF0aCI6Ii83NDYyODQyMy80Nzg1MTg0NjgtZmUzYzdlMjYtYzUyOS00YWMzLWJhYTgtOTc3NDE3MjEzNmFlLm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA4MTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwODE1VDE3MzkzNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPThmYTExNzVlNjg3ZmNiMjU2NDQ0MGNlMmFjNjAyYTg3OTg1NDQ3ZTYwM2JlNTBmNjIyMTkwZDVhNTIxNTY4YjkmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.Lhdwp2D6XFhZoHc9YWdIPO7UGD-okF5cyNOSiGAt9jM
+
 Deux services **Docker** :
 
 * **backend** : API Flask pour ingestion, retrieval et génération (RAG)
@@ -96,23 +100,4 @@ docker compose exec api python ingestion.py --docs_dir data/raw_documents --clea
 * `POST /upload` → `multipart/form-data` (`file=@doc.pdf`) → indexation incrémentale
 * `GET /list_user_uploads` → `{"docs":[{"path","size"}]}`
 
----
 
-## 🧯 Dépannage
-
-* **`Namespace not found` / `Index not found`**
-  → Vérifie `PINECONE_API_KEY`, `PINECONE_INDEX`, `PINECONE_REGION`. L’index est créé automatiquement si l’API a les droits.
-
-* **`Vector ID must be ASCII`**
-  → Les IDs vectoriels sont normalisés (slug + hash). Évite les caractères spéciaux dans les noms de fichiers quand possible.
-
-* **Fichier DOCX “\~\$”**
-  → Ce sont des **verrous Office** temporaires. Ils sont ignorés à l’ingestion.
-
-* **Pas de nouveaux records après upload**
-  → Regarde les logs backend (`docker compose logs -f api`). L’upload doit appeler `engine.index_file(save_path, base_dir=data/user_uploads)`.
-
-* **L’UI ne voit pas les docs**
-  → L’UI liste **uniquement** les fichiers uploadés via `/upload` (pas `raw_documents`). Côté Docker, assure-toi que `./data/user_uploads:/app/data/user_uploads:rw` est monté sur **api**.
-
----
