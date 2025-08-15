@@ -48,7 +48,7 @@ upfund-rag/
 * Compte **Pinecone** (serverless)
 * clé **OpenAI** 
 
-Copie le fichier d’exemple et remplis les clés :
+Copiez le fichier d’exemple et remplis les clés :
 
 ```bash
 cp .env.example .env
@@ -69,8 +69,8 @@ docker compose up --build -d
 
 Ensuite :
 
-1. Dépose tes docs “bulk” dans `data/raw_documents/`
-2. Lance l’ingestion (création/rafraîchissement d’index) :
+1. Télécharger et déposez les docs du [google drive dans](https://drive.google.com/drive/folders/1Mt0Z4yLhOfeDo-1sQMb5IpX-__QwcV-h?usp=sharing) dans `data/raw_documents/`
+2. Lancez l’ingestion (création/rafraîchissement d’index) :
 
 ```bash
 docker compose exec api python ingestion.py --docs_dir data/raw_documents --clear
@@ -78,7 +78,7 @@ docker compose exec api python ingestion.py --docs_dir data/raw_documents --clea
 
 3. Ouvre l’UI : [http://localhost:8501](http://localhost:8501)
 
-> Tu peux aussi **uploader** des fichiers directement depuis l’UI (section “Uploads”) — ceux-là sont stockés dans `data/user_uploads/` et **indexés** à la volée.
+> Vous pouvez aussi **uploader** des fichiers directement depuis l’UI (section “Uploads”) — ceux-là sont stockés dans `data/user_uploads/` et **indexés** à la volée.
 
 
 ## 🧱 Stack technique

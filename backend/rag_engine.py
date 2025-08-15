@@ -82,12 +82,10 @@ class EmbeddingProvider:
     @property
     def dim(self) -> int:
         if self.provider == "sbert":
-            return 384  # MiniLM-L6-v2
-        # default dims for popular OpenAI models
+            return 384  
         if self.openai_embed_model == "text-embedding-3-large":
             return 3072
-        return 1536  # text-embedding-3-small
-
+        return 1536 
     def _ensure_sbert(self):
         if self._sbert is None:
             self._sbert = SentenceTransformer(self.sbert_model_name)
