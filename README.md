@@ -70,7 +70,14 @@ docker compose up --build -d
 Ensuite :
 
 1. Télécharger et déposez les docs du [google drive dans](https://drive.google.com/drive/folders/1Mt0Z4yLhOfeDo-1sQMb5IpX-__QwcV-h?usp=sharing) dans `data/raw_documents/`
-2. Lancez l’ingestion (création/rafraîchissement d’index) :
+
+2. Supprimer tout fichier qui n'est pas pdf/docx/txt
+
+```bash
+find . -type f ! \( -iname "*.pdf" -o -iname "*.docx" -o -iname "*.txt" \) -delete
+```
+
+3. Lancez l’ingestion (création/rafraîchissement d’index) :
 
 ```bash
 docker compose exec api python ingestion.py --docs_dir data/raw_documents --clear
